@@ -41,4 +41,9 @@
 - `npm run build`: GREEN.
 - `git diff --check`: GREEN.
 - Secret-pattern scan: GREEN.
-- Deployment and live smoke result: recorded after the workflow completes.
+- Commit: `b43168f` (`Add responsive Loop Snake game`).
+- Push: `HEAD -> main` succeeded with process-only token authentication.
+- GitHub Pages workflow: run `29292221869`, completed successfully.
+- Pages publishing source: changed from legacy branch publishing to `workflow`, ensuring only the whitelisted `dist/` artifact is public.
+- Live smoke: HTTP 200 for Home, Games, `game.js`, `input.js`, `snake-core.js`, and `styles.css`.
+- Live mobile browser at 320px: game module initialized to Ready, no horizontal overflow, and no console warnings/errors.
