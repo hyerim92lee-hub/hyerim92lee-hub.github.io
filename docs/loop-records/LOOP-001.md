@@ -34,7 +34,10 @@
 - `npm run build`: GREEN.
 - `git diff --check`: GREEN.
 - Secret-pattern scan: GREEN.
-- Deployment and live smoke result: recorded after the workflow completes.
+- Commit: `869fe42` (`Build professional E-AI site shell`).
+- Push: `HEAD -> main` succeeded after disabling an unrelated system credential helper for the one push command.
+- GitHub Pages workflow: run `29291918640`, completed successfully.
+- Live smoke: HTTP 200 for Home, Games, and `assets/styles.css`.
 
 ## Remaining scope
 

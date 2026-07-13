@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Interactive systems playground by E-AI Project.">
+    <meta name="description" content="Play Loop Snake with keyboard or mobile touch in the E-AI systems playground.">
     <meta name="theme-color" content="#0b0d12">
-    <title>Games — E-AI Project</title>
+    <title>Loop Snake — E-AI Project</title>
     <link rel="stylesheet" href="../assets/styles.css">
   </head>
   <body>
@@ -20,13 +20,38 @@
         <a class="nav-cta" href="../#contact">Connect</a>
       </nav>
     </header>
-    <main id="content" class="game-page">
-      <section class="game-intro">
+
+    <main id="content" class="game-page game-layout">
+      <section class="game-copy" aria-labelledby="game-title">
         <p class="eyebrow">Systems playground · 01</p>
-        <h1>Games</h1>
-        <p>The first experiment is being wired into the loop. Snake arrives in the next verified release.</p>
-        <a class="button button-secondary" href="../">← Back home</a>
+        <h1 id="game-title">Loop<br><span>Snake</span></h1>
+        <p>Act. Observe. Correct. Repeat. Keep the loop alive for as long as you can.</p>
+
+        <div class="score-panel" aria-label="Game score">
+          <div><span>Score</span><strong id="game-score">00</strong></div>
+          <div><span>Best</span><strong id="game-best">00</strong></div>
+        </div>
+
+        <button class="button button-primary game-start" id="start-game" type="button">Start game</button>
+        <p class="game-help"><strong>Keyboard:</strong> Arrow keys or WASD<br><strong>Touch:</strong> Swipe the board or use the controls</p>
+        <p id="game-status" class="game-status" aria-live="polite">Loading game…</p>
+      </section>
+
+      <section class="game-stage" aria-label="Loop Snake game">
+        <canvas id="game-board" width="640" height="640" tabindex="0" role="img" aria-label="Snake game board. Use arrow keys, WASD, swipe, or direction buttons to move."></canvas>
+        <div class="touch-controls" aria-label="Touch direction controls">
+          <button type="button" data-direction="up" aria-label="Move up">↑</button>
+          <button type="button" data-direction="left" aria-label="Move left">←</button>
+          <button type="button" data-direction="down" aria-label="Move down">↓</button>
+          <button type="button" data-direction="right" aria-label="Move right">→</button>
+        </div>
       </section>
     </main>
+
+    <footer class="site-footer game-footer">
+      <a href="../">← Back to E-AI Project</a>
+      <span>One input. One tick. One observable outcome.</span>
+    </footer>
+    <script type="module" src="game.js"></script>
   </body>
 </html>

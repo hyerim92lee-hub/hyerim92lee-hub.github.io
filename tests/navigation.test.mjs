@@ -17,5 +17,6 @@ test("Home navigation exposes a mobile-ready Games destination", async () => {
     "utf8",
   );
 
-  assert.match(games, /<h1[^>]*>\s*Games\s*<\/h1>/i);
+  assert.match(games, /<a\s+href=["']\.\/["'][^>]+aria-current=["']page["'][^>]*>\s*Games\s*<\/a>/i);
+  assert.match(games, /<h1[^>]*>\s*Loop[\s\S]*Snake[\s\S]*<\/h1>/i);
 });
