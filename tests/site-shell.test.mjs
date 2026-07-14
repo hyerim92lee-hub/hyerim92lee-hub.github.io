@@ -2,18 +2,18 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-test("Home presents the E-AI professional profile and public work", async () => {
+test("Home presents a professional profile structure and verified GitHub link", async () => {
   const home = await readFile(new URL("../index.html", import.meta.url), "utf8");
 
   assert.match(home, /href=["']styles\.css["']/i);
   assert.match(home, /<script[^>]+src=["']script\.js["'][^>]*><\/script>/i);
   assert.match(home, /<a[^>]+class=["']skip-link["'][^>]+href=["']#content["']/i);
   assert.match(home, /<main\s+id=["']content["']/i);
-  assert.match(home, /id=["']work["']/i);
-  assert.match(home, /id=["']principles["']/i);
+  assert.match(home, /id=["']profile["']/i);
+  assert.match(home, /id=["']experience["']/i);
+  assert.match(home, /id=["']projects["']/i);
   assert.match(home, /id=["']contact["']/i);
-  assert.match(home, /Efficient\s*(?:&amp;|&)\s*Robust AI Systems/i);
-  assert.match(home, /LoRP-Locality-Aware-Redundancy-Pruning/);
-  assert.match(home, /ghosted_layers_official_repository/);
-  assert.match(home, /samsung-agent-education/);
+  assert.match(home, /https:\/\/github\.com\/hyerim92lee-hub/);
+  assert.match(home, /\[사람 확인 필요\]/);
+  assert.match(home, /class=["']nav-toggle["'][^>]+aria-controls=["']primary-nav["']/i);
 });

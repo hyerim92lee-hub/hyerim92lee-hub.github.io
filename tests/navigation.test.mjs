@@ -9,7 +9,7 @@ test("Home navigation exposes a mobile-ready Games destination", async () => {
     home,
     /<meta\s+name=["']viewport["']\s+content=["'][^"']*width=device-width[^"']*["']\s*\/?>/i,
   );
-  assert.match(home, /<nav\s+aria-label=["']Primary["'][^>]*>/i);
+  assert.match(home, /<nav[^>]+aria-label=["']Primary["'][^>]*>/i);
   assert.match(home, /<a\s+href=["']games\/index\.html["'][^>]*>\s*Games\s*<\/a>/i);
 
   const games = await readFile(
