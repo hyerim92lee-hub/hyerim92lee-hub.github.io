@@ -8,6 +8,7 @@ test("Games page exposes accessible snake controls for keyboard and touch", asyn
   assert.match(page, /<canvas[^>]+id=["']game-board["'][^>]+aria-label=/i);
   assert.match(page, /id=["']game-status["'][^>]+aria-live=["']polite["']/i);
   assert.match(page, /<button[^>]+id=["']start-game["']/i);
+  assert.match(page, /<strong[^>]+id=["']game-best["']/i);
   for (const direction of ["up", "right", "down", "left"]) {
     assert.match(page, new RegExp(`data-direction=["']${direction}["']`, "i"));
   }

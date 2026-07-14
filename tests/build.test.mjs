@@ -10,6 +10,8 @@ test("build emits only deployable static site assets", async () => {
   await execFileAsync(process.execPath, ["scripts/build.mjs"]);
 
   await access(new URL("../dist/index.html", import.meta.url));
+  await access(new URL("../dist/styles.css", import.meta.url));
+  await access(new URL("../dist/script.js", import.meta.url));
   await access(new URL("../dist/games/index.html", import.meta.url));
   await access(new URL("../dist/assets/styles.css", import.meta.url));
 

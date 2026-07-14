@@ -1,4 +1,5 @@
 import { createGame, queueDirection, startGame, stepGame } from "../assets/snake-core.js";
+import { loadBestScore, saveBestScore } from "../assets/score-store.js";
 import { directionFromKey, directionFromSwipe } from "./input.js";
 
 const canvas = document.querySelector("#game-board");
@@ -11,7 +12,8 @@ const directionButtons = document.querySelectorAll("[data-direction]");
 
 let game = createGame();
 let timer = null;
-let bestScore = 0;
+const bestScoreKey = "loop-snake-best-score";
+let bestScore = loadBestScore(window.localStorage, bestScoreKey);
 let pointerStart = null;
 
 function setStatus(message) {
@@ -75,6 +77,7 @@ function tick() {
   if (game.status === "over") {
     stopTimer();
     bestScore = Math.max(bestScore, game.score);
+    saveBestScore(window.localStorage, bestScoreKey, bestScore);
     startButton.textContent = "Play again";
     setStatus(`Game over. Score ${game.score}. Press Play again to reset.`);
   }

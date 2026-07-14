@@ -5,7 +5,8 @@ import test from "node:test";
 test("Home presents the E-AI professional profile and public work", async () => {
   const home = await readFile(new URL("../index.html", import.meta.url), "utf8");
 
-  assert.match(home, /href=["']assets\/styles\.css["']/i);
+  assert.match(home, /href=["']styles\.css["']/i);
+  assert.match(home, /<script[^>]+src=["']script\.js["'][^>]*><\/script>/i);
   assert.match(home, /<a[^>]+class=["']skip-link["'][^>]+href=["']#content["']/i);
   assert.match(home, /<main\s+id=["']content["']/i);
   assert.match(home, /id=["']work["']/i);
