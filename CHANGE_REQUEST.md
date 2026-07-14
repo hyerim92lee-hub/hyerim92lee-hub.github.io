@@ -1,6 +1,6 @@
 # Change Request: CRQ-2026-07-14-001
 
-- Overall status: `DEPLOYING`
+- Overall status: `DEPLOYED`
 - Baseline: `e38fc38` (`Refresh portfolio profile and SaaS UI`) on `main`; origin `https://github.com/hyerim92lee-hub/hyerim92lee-hub.github.io.git`.
 - Last known good deployment: https://hyerim92lee-hub.github.io/ — Home and `/games/` returned HTTP 200 on 2026-07-14.
 - Reference materials: attached `pasted-text.txt`. No CV, résumé, PDF, image, or other content source was supplied or found.
@@ -121,3 +121,11 @@ Execution evidence: `npm.cmd test` 18/18 PASS; `npm.cmd run build` PASS; `node -
 The user approved this exact enemy contract: one enemy; each game tick it randomly selects a valid cardinal move; it moves one cell per tick (the same speed as the snake); any snake-head/enemy collision ends the game; it may not spawn or move onto food, snake body, or the initial snake cells; collision has no score adjustment; and a new game creates a new enemy position/direction. The enemy uses a visually distinct purple color. CR-005 is `VERIFYING`: deterministic automated verification is complete; browser gameplay acceptance remains unavailable.
 
 CR-005 verification evidence: new game enemy placement avoids snake/food; one tick makes one valid cardinal enemy move; snake-head/enemy collision ends the game without score change; and renderer uses the distinct enemy color. `npm.cmd test` 18/18 PASS, `npm.cmd run build` PASS, `node --check games/game.js` PASS, and `git diff --check` PASS.
+
+## Deployment result — 2026-07-14
+
+- Deployment commit: `273c9bf` (`CRQ-2026-07-14-001 enhance Loop Snake`).
+- Target repository/branch: `hyerim92lee-hub/hyerim92lee-hub.github.io`, `main`.
+- Public URL: https://hyerim92lee-hub.github.io/.
+- Live verification: `https://hyerim92lee-hub.github.io/assets/snake-core.js` returned HTTP 200 and contained `moveEnemy` on the first check.
+- Release state: `DEPLOYED`. The previously recorded browser screenshot limitation remains an acceptance-observation limitation, not a failed deploy.

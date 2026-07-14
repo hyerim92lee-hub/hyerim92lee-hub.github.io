@@ -419,3 +419,7 @@ git status --short
 | `LOOP-CRQ-003-AUDIO` | `VERIFYING` | Added guarded Web Audio impact once per terminal transition. | One-shot static transition test and full verification passed; actual audible observation unavailable (`ENVIRONMENT`). | Browser audio verification. |
 | `LOOP-CRQ-004-ENEMY` | `VERIFYING` | Added one deterministic-state enemy with random valid cardinal movement, collision Game Over, non-overlapping spawn/movement, and purple rendering. | Core/entity/render tests, full suite/build/syntax/diff pass; browser gameplay observation remains unavailable (`ENVIRONMENT`). | Browser game acceptance, then whole regression. |
 | `LOOP-CRQ-005-REGRESSION` | `BLOCKED` | Not started. | Depends on CR-005 and browser acceptance of CR-001–003. | Resolve dependencies. |
+
+### Deployment result — CRQ-2026-07-14-001
+
+`273c9bf` was pushed to `origin/main`. GitHub Pages served the updated `assets/snake-core.js` with HTTP 200 and the `moveEnemy` implementation on the first public check. Release state: `DEPLOYED`; browser screenshot observation remains recorded as an environment limitation.

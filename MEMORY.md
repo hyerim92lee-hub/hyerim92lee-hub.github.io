@@ -374,3 +374,12 @@ Retry count: 0
 End state: VERIFYING
 Next loop: browser gameplay acceptance for CR-001–003 and CR-005, then LOOP-CRQ-005-REGRESSION.
 ```
+
+### Deployment record — CRQ-2026-07-14-001
+
+- Deployment commit: `273c9bf` (`CRQ-2026-07-14-001 enhance Loop Snake`).
+- Deployment URL: https://hyerim92lee-hub.github.io/.
+- Push: `main -> origin/main` succeeded.
+- Public verifier: `assets/snake-core.js` returned HTTP 200 and contained `moveEnemy` on the first post-push request.
+- Final release state: `DEPLOYED`.
+- Retained limitation: browser screenshot/interactive audio acceptance could not be observed in this environment; automated, build, static HTTP, and live asset checks passed.
