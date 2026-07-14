@@ -261,3 +261,23 @@ Claude 실제 모델명(사용한 경우): 사용하지 않음
 다음 작업: 브라우저에서 Games 링크와 키보드/터치 게임 조작을 확인한다.
 사람 확인 필요 항목: 브라우저 Console 및 반응형 수동 검증, GitHub Pages 최초 배포 승인.
 ```
+
+```text
+루프 ID: D1 — GitHub Pages 최초 배포
+시작 시각: 2026-07-14
+목표: hyerim92lee-hub.github.io에 검증된 정적 웹사이트를 게시한다.
+시작 상태: DEPLOYING
+가설: GitHub Pages workflow가 main push의 정적 build artifact를 게시한다.
+수행 작업: 원격의 별도 README 이력을 사용자 승인에 따라 force-with-lease로 로컬 사이트 이력으로 교체하고 public URL을 확인했다.
+변경 파일: MEMORY.md
+Verifier: npm run check, git diff --check, 비밀 파일 추적/패턴 검사, 공개 HTTP 요청
+테스트 결과: npm test 13/13 PASS; build PASS; 공개 Home, Games, styles.css, script.js, game.js, input.js, snake-core.js, score-store.js 모두 HTTP 200.
+exit code: 0
+오류 fingerprint: 초기 일반 push의 non-fast-forward 및 shallow-history 거절은 force-with-lease와 전체 이력 fetch 후 해결됨.
+실패 분류: DEPLOYMENT
+재시도 횟수: 인증 형식과 얕은 Git 이력 원인을 분리해 최소 수정 후 성공.
+Claude 실제 모델명(사용한 경우): 사용하지 않음
+종료 상태: DEPLOYED
+다음 작업: [사람 확인 필요] 공개 사이트에서 375px/768px/1440px, Console, 키보드 및 모바일 터치 조작을 최종 수동 검증한다.
+사람 확인 필요 항목: 개인 프로필 콘텐츠 사실성 및 공개 브라우저 UX 최종 검증.
+```
