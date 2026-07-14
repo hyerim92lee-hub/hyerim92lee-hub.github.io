@@ -15,6 +15,7 @@
       <a class="brand" href="../index.html" aria-label="Professional Portfolio home"><span class="brand-mark">P</span><span>Professional Portfolio</span></a>
       <nav aria-label="Primary" class="primary-nav">
         <a href="../index.html#profile">프로필</a>
+        <a href="../index.html#experience">경력</a>
         <a href="../index.html#projects">프로젝트</a>
         <a href="index.html" aria-current="page">Games</a>
         <a class="nav-cta" href="../index.html#contact">연락처</a>
@@ -32,13 +33,18 @@
           <div><span>Best</span><strong id="game-best">00</strong></div>
         </div>
 
-        <button class="button button-primary game-start" id="start-game" type="button">Start game</button>
         <p class="game-help"><strong>Keyboard:</strong> Arrow keys or WASD<br><strong>Touch:</strong> Swipe the board or use the controls</p>
         <p id="game-status" class="game-status" aria-live="polite">Loading game…</p>
       </section>
 
       <section class="game-stage" aria-label="Loop Snake game">
+        <button id="start-game" class="button button-primary game-start game-stage-control" type="button">Start game</button>
         <canvas id="game-board" width="640" height="640" tabindex="0" role="img" aria-label="Snake game board. Use arrow keys, WASD, swipe, or direction buttons to move."></canvas>
+        <div class="game-overlay" id="game-over-panel" aria-hidden="true" role="status">
+          <strong>Game Over</strong>
+          <span id="game-over-score"></span>
+          <span>Press Play again to reset.</span>
+        </div>
         <div class="touch-controls" aria-label="Touch direction controls">
           <button type="button" data-direction="up" aria-label="Move up">↑</button>
           <button type="button" data-direction="left" aria-label="Move left">←</button>

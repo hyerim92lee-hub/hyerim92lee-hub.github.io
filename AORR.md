@@ -400,3 +400,22 @@ git status --short
 그리고 브라우저에서 320px, 768px, 1440px 각각을 확인하여 Home, Games, 키보드 조작, 스와이프, 방향 버튼, 점수, 재시작과 Console error 0을 확인한다.
 
 배포 후에는 GitHub Pages 공개 URL에서 Home, Games, `styles.css`, `script.js`, 게임 모듈(분리한 경우)이 HTTP 200인지 확인한다. 인증 정보는 어떤 verifier 출력, 파일, commit, build artifact에도 포함하지 않는다.
+## Change Request Loop Plan — CRQ-2026-07-14-001
+
+| Loop ID | Change items | Target / Act | Observe / Reason | Verifier / completion | Retry / stop / HITL | Expected files | State | Flow |
+|---|---|---|---|---|---|---|---|---|
+| `LOOP-CRQ-001-NAV` | CR-004 | Restore Experience navigation on Games. | Compare Home/Games links, relative path, current-page semantics, responsive layout. | Navigation/page tests, full test/build, Pages path; Experience resolves and links remain valid. | Retry one markup/path cause; HITL if target fragment is absent. | Games HTML, navigation tests | `CHANGE_PLANNED` | → 002 |
+| `LOOP-CRQ-002-OVERLAY` | CR-001, CR-003 | Add in-board terminal panel and in-stage control. | Collision/replay/focus/input at 320/768/1440. | Targeted tests, full test/build, manual interaction; Game Over clear and control usable. | Retry one layout/state cause; stop on repeated fingerprint. | Games HTML/JS/CSS, tests | `CHANGE_PLANNED` | 001 → 003 |
+| `LOOP-CRQ-003-AUDIO` | CR-002 | Attach safe one-shot end effect. | Confirm no replay on redraw/pause/resume and audio failure is harmless. | Transition test, full test/build, manual sound/console; one end event, one effect. | Retry one lifecycle cause; HITL for external licensed asset. | Game JS, optional local asset/helper, tests | `CHANGE_PLANNED` | 002 → 004 |
+| `LOOP-CRQ-004-ENEMY` | CR-005 | Add the approved deterministic-state enemy. | Spawn, movement, collision, food, score, pause, restart. | Core tests plus full regression; approved rules reproducible. | Browser gameplay observation remains required. | Core/game/CSS/tests | `VERIFYING` | 003 → 005 |
+| `LOOP-CRQ-005-REGRESSION` | All | Full site/game/Pages readiness check. | Portfolio, navigation, mobile, controls, states, console, static paths. | Test/build/diff/responsive/HTTP checks all pass. | Blocked until CR-005 passes; deployment approval separate. | Tests/build artifacts | `BLOCKED` | 004 → deploy approval |
+
+### Step 9 loop results — CRQ-2026-07-14-001
+
+| Loop ID | State | Act / Observe | Reason / verifier | Next |
+|---|---|---|---|---|
+| `LOOP-CRQ-001-NAV` | `PASSED` | Added Games Experience link and navigation contract. | `npm.cmd test` 14/14, build, syntax, diff and local HTTP passed. | `LOOP-CRQ-002-OVERLAY` |
+| `LOOP-CRQ-002-OVERLAY` | `VERIFYING` | Added state-driven Game Over panel and moved the existing control into the board stage. | Automated tests/build/static HTTP passed. Browser viewport, focus and touch layout observation is unavailable (`ENVIRONMENT`). | Browser verification or explicit acceptance, then audio check. |
+| `LOOP-CRQ-003-AUDIO` | `VERIFYING` | Added guarded Web Audio impact once per terminal transition. | One-shot static transition test and full verification passed; actual audible observation unavailable (`ENVIRONMENT`). | Browser audio verification. |
+| `LOOP-CRQ-004-ENEMY` | `VERIFYING` | Added one deterministic-state enemy with random valid cardinal movement, collision Game Over, non-overlapping spawn/movement, and purple rendering. | Core/entity/render tests, full suite/build/syntax/diff pass; browser gameplay observation remains unavailable (`ENVIRONMENT`). | Browser game acceptance, then whole regression. |
+| `LOOP-CRQ-005-REGRESSION` | `BLOCKED` | Not started. | Depends on CR-005 and browser acceptance of CR-001–003. | Resolve dependencies. |

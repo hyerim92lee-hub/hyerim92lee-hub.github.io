@@ -8,6 +8,8 @@ const score = document.querySelector("#game-score");
 const best = document.querySelector("#game-best");
 const status = document.querySelector("#game-status");
 const startButton = document.querySelector("#start-game");
+const gameOverPanel = document.querySelector("#game-over-panel");
+const gameOverScore = document.querySelector("#game-over-score");
 const directionButtons = document.querySelectorAll("[data-direction]");
 
 let game = createGame();
@@ -15,6 +17,7 @@ let timer = null;
 const bestScoreKey = "loop-snake-best-score";
 let bestScore = loadBestScore(window.localStorage, bestScoreKey);
 let pointerStart = null;
+let gameOverHandled = false;
 
 function setStatus(message) {
   status.textContent = message;
@@ -55,6 +58,13 @@ function draw() {
     context.fill();
   }
 
+  if (game.enemy) {
+    context.fillStyle = "#8b5cf6";
+    context.beginPath();
+    context.arc((game.enemy.x + 0.5) * cell, (game.enemy.y + 0.5) * cell, cell * 0.34, 0, Math.PI * 2);
+    context.fill();
+  }
+
   game.snake.forEach((segment, index) => {
     const gap = Math.max(1.5, cell * 0.1);
     context.fillStyle = index === 0 ? "#efffc8" : "#c9ff47";
@@ -72,13 +82,43 @@ function stopTimer() {
   timer = null;
 }
 
+function setGameOverVisible(visible) {
+  gameOverPanel.setAttribute("aria-hidden", String(!visible));
+}
+
+function playGameOverSound() {
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    const audio = new AudioContext();
+    const oscillator = audio.createOscillator();
+    const gain = audio.createGain();
+    oscillator.type = "square";
+    oscillator.frequency.setValueAtTime(120, audio.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(58, audio.currentTime + 0.16);
+    gain.gain.setValueAtTime(0.0001, audio.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.11, audio.currentTime + 0.01);
+    gain.gain.exponentialRampToValueAtTime(0.0001, audio.currentTime + 0.18);
+    oscillator.connect(gain).connect(audio.destination);
+    oscillator.start();
+    oscillator.stop(audio.currentTime + 0.19);
+    oscillator.addEventListener("ended", () => audio.close());
+  } catch {
+    // Audio is progressive enhancement; a blocked context must not interrupt play.
+  }
+}
+
 function tick() {
   game = stepGame(game);
-  if (game.status === "over") {
+  if (game.status === "over" && !gameOverHandled) {
+    gameOverHandled = true;
     stopTimer();
     bestScore = Math.max(bestScore, game.score);
     saveBestScore(window.localStorage, bestScoreKey, bestScore);
     startButton.textContent = "Play again";
+    gameOverScore.textContent = `Score ${game.score}`;
+    setGameOverVisible(true);
+    playGameOverSound();
     setStatus(`Game over. Score ${game.score}. Press Play again to reset.`);
   }
   draw();
@@ -86,6 +126,8 @@ function tick() {
 
 function begin() {
   if (game.status === "over") game = createGame();
+  gameOverHandled = false;
+  setGameOverVisible(false);
   game = startGame(game);
   stopTimer();
   timer = window.setInterval(tick, 120);

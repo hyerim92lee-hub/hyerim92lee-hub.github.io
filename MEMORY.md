@@ -288,3 +288,89 @@ Claude 실제 모델명(사용한 경우): 사용하지 않음
 다음 작업: [사람 확인 필요] 공개 사이트에서 375px/768px/1440px, Console, 키보드 및 모바일 터치 조작을 최종 수동 검증한다.
 사람 확인 필요 항목: 개인 프로필 콘텐츠 사실성 및 공개 브라우저 UX 최종 검증.
 ```
+## Change request memory — CRQ-2026-07-14-001
+
+- Last known good deployment commit: `e38fc38` (`Refresh portfolio profile and SaaS UI`).
+- Last known good deployment URL: https://hyerim92lee-hub.github.io/ (Home and `/games/` returned HTTP 200 on 2026-07-14).
+- Change items: CR-001 Game Over overlay; CR-002 one-shot end sound; CR-003 in-stage start control; CR-004 Experience navigation on Games; CR-005 random moving enemy.
+- User-request summary: make game end clear, add end sound, move start control into game screen, restore Experience in Games, add a random enemy.
+- Reference materials: attached `pasted-text.txt`; no CV/résumé/PDF/image/document source applies.
+- Current state: `HITL_REQUIRED`. CR-001–004 are planned for Step 9; CR-005 needs rules.
+- Loop order: `LOOP-CRQ-001-NAV` → `LOOP-CRQ-002-OVERLAY` → `LOOP-CRQ-003-AUDIO` → `LOOP-CRQ-004-ENEMY` → `LOOP-CRQ-005-REGRESSION`.
+- First Step 9 loop: `LOOP-CRQ-001-NAV`; this step made no implementation, commit, push, or deployment change.
+- Rollback: if a loop fails its focused verifier or regresses test/build, revert only its uncommitted scoped files to the baseline before a classified retry; do not alter unrelated content or Pages settings.
+- HITL: specify CR-005 enemy count, snake-collision outcome, speed, score effect, and food/initial-snake overlap.
+
+### Step 9 baseline record
+
+- Change baseline commit: `e38fc38e9c2cf62a295cbcbebdf7b1fdfa97b37e`.
+- Last known good deployment: `e38fc38` at https://hyerim92lee-hub.github.io/.
+- Git state before implementation: `main...origin/main`; planned-document changes only (`CHANGE_REQUEST.md`, `AORR.md`, `MEMORY.md`).
+- Existing verification evidence: recorded `npm test` 13/13 PASS and `npm run build` PASS; public Home and Games HTTP 200.
+- Baseline site/game state: professional portfolio with Games page, keyboard/swipe/touch Loop Snake, score and best-score persistence; no in-board Game Over panel, end sound, in-stage start control, Experience link on Games, or enemy entity.
+- Rollback: retain the existing baseline history; if a focused loop fails, revert only that loop's uncommitted scoped files, rerun its verifier, and never use hard reset, force push, or deletion of existing records.
+
+### Step 9 execution record
+
+```text
+Loop ID: LOOP-CRQ-001-NAV
+Change Item: CR-004
+Start state: CHANGE_PLANNED
+Act: Added ../index.html#experience to the Games primary navigation and extended its navigation test.
+Files: games/index.html, tests/navigation.test.mjs
+Verifier: npm.cmd test; npm.cmd run build; node --check games/game.js; git diff --check; built local HTTP
+Result: PASS — 14/14 tests, build/syntax/diff pass, / and /games/ HTTP 200.
+Exit code: 0
+Failure fingerprint: none
+Retry count: 0
+End state: PASSED
+Next loop: LOOP-CRQ-002-OVERLAY
+```
+
+```text
+Loop ID: LOOP-CRQ-002-OVERLAY / LOOP-CRQ-003-AUDIO
+Change Items: CR-001, CR-003 / CR-002
+Start state: CHANGE_PLANNED
+Act: Added in-board Game Over panel, moved the existing start/pause/replay button into the stage, and added a one-shot guarded Web Audio impact on running→over.
+Files: games/index.html, games/game.js, assets/styles.css, tests/game-page.test.mjs, tests/game-effects.test.mjs
+Verifier: npm.cmd test; npm.cmd run build; node --check games/game.js; git diff --check; built local HTTP for /, /games/, /assets/styles.css, /games/game.js
+Result: Automated verification PASS — 14/14 tests; build/syntax/diff pass; all listed local paths HTTP 200.
+Exit code: 0
+Failure fingerprint: ENVIRONMENT|browser acceptance|viewport/focus/audio|no available browser observation channel
+Retry count: 0 (no code retry; unavailable observation is not a code defect)
+End state: VERIFYING
+Next loop: browser acceptance for CR-001–003; CR-005 remains HITL_REQUIRED
+```
+
+```text
+Loop ID: LOOP-CRQ-004-ENEMY
+Change Item: CR-005
+Start state: HITL_REQUIRED
+Act: none
+Reason: enemy count, collision result, speed, score effect, and occupancy rules are unspecified.
+End state: HITL_REQUIRED
+Next loop: only after human rule decision.
+```
+
+### CR-005 human decision
+
+The user approved one random cardinal-moving enemy at snake speed. A snake-head/enemy collision is Game Over; no score penalty applies; enemy spawn/movement must not overlap food, snake body, or initial snake cells; and restart creates a new enemy. This resolves the previous HITL requirement and starts `LOOP-CRQ-004-ENEMY` from `CHANGE_PLANNED`.
+
+### Deployment authorization
+
+The user explicitly authorized deployment on 2026-07-14 after the final automated verification passed. Deployment target remains `origin/main` at https://github.com/hyerim92lee-hub/hyerim92lee-hub.github.io.git and https://hyerim92lee-hub.github.io/. Browser screenshot output was unavailable; this is recorded as an environment limitation, not treated as a failed code verifier.
+
+```text
+Loop ID: LOOP-CRQ-004-ENEMY
+Change Item: CR-005
+Start state: CHANGE_PLANNED
+Act: Added one enemy to pure game state; excluded snake/food from its spawn and valid moves; selected one valid cardinal move per tick; ended the game for snake-head/enemy collision; rendered enemy in purple.
+Files: assets/snake-core.js, games/game.js, tests/snake-core.test.mjs, tests/game-effects.test.mjs, CHANGE_REQUEST.md, AORR.md, MEMORY.md
+Verifier: npm.cmd test; npm.cmd run build; node --check games/game.js; git diff --check
+Result: PASS — 18/18 tests; build, syntax, and diff checks pass.
+Exit code: 0
+Failure fingerprint: none after implementation
+Retry count: 0
+End state: VERIFYING
+Next loop: browser gameplay acceptance for CR-001–003 and CR-005, then LOOP-CRQ-005-REGRESSION.
+```

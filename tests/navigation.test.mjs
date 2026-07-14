@@ -18,5 +18,6 @@ test("Home navigation exposes a mobile-ready Games destination", async () => {
   );
 
   assert.match(games, /<a\s+href=["']index\.html["'][^>]+aria-current=["']page["'][^>]*>\s*Games\s*<\/a>/i);
+  assert.match(games, /<a\s+href=["']\.\.\/index\.html#experience["'][^>]*>\s*경력\s*<\/a>/i);
   assert.match(games, /<h1[^>]*>\s*Loop[\s\S]*Snake[\s\S]*<\/h1>/i);
 });
